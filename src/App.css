@@ -1,0 +1,17 @@
+:root {
+  --bgColor: rgb(64, 64, 205);
+}
+
+html {
+  height: 100%;
+}
+
+
+body {
+  background: linear-gradient(207deg, rgb(130, 66, 173) 0%, rgb(57, 99, 204) 53%) no-repeat;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
