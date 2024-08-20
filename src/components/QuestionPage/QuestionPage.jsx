@@ -40,6 +40,7 @@ export const QuestionPage = (props) => {
                             return <Answer
                                         answerInfo={answer}
                                         currentUserData={props.currentUserData}
+                                        questionInfo={props.questionInfo}
                                         onRemoveAnswer={props.onRemoveAnswer}
                                         onEditAnswer={props.onEditAnswer}
                                     />
