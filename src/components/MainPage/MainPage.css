@@ -6,7 +6,7 @@
     & .loginBtn {
         position: absolute;
         top:20px;
-        right: 20px;
+        left: 90%;
         border-radius: 50px;
         border:0px;
         padding:30px;
@@ -16,7 +16,7 @@
     & .accountBtn{
         position: absolute;
         top:20px;
-        
+        left: 0%;
         border-radius: 50px;
         border:0px;
         padding:30px;
@@ -26,7 +26,7 @@
     & .addNewQuestionBtn {
         position: absolute;
         top:20px;
-        left: 200px;
+        left: 15%;
         border-radius: 50px;
         border:0px;
         padding:30px;
@@ -37,6 +37,16 @@
         position: absolute;
         top:20px;
         left: 46%;
+        border-radius: 50px;
+        border:0px;
+        padding:30px;
+        font-size: 15px;
+    }
+
+    & .verifyUsersBtn {
+        position: absolute;
+        top:20px;
+        left: 75%;
         border-radius: 50px;
         border:0px;
         padding:30px;
@@ -99,5 +109,18 @@
     width: 93%;
     margin: 10px;
     padding: 30px;
-    justify-content: center;
+    justify-content: space-between;
+
 }
+
+.questions, .archievedQuestions {
+    background-color: white;
+    width: 48%;
+    margin: 15px;
+    padding: 15px;
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    border-radius: 50px
+}
+

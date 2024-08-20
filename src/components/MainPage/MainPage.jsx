@@ -2,13 +2,17 @@ import { useState } from "react"
 import "./MainPage.css"
 import { AccountDetails } from "../AccountDetails/AccountDetails"
 import { QuestionPage } from "../QuestionPage/QuestionPage"
+import { QuestionOnMain } from "../QuestionOnMain/QuestionOnMain"
 
 export const MainPage = (props) => {
     const [isAccountDetails, setIsAccountDetails] = useState(false)
     const [isNewQuestion, setIsNewQuestion] = useState(false)
     const [isQuestionDetails, setIsQuestionDetails] = useState(false)
+    const [isVeryfing, setIsVeryfing] = useState(false)
 
     let [currentQuestionDetails, setCurrentQuestionDetails] = useState({})
+    let [keyPhrase, setKeyPhrase] = useState("")
+    let [valueOfInput, setValueOfInput] = useState("")
 
     const questionDetails = (questionInfo) => {
         currentQuestionDetails = questionInfo
@@ -32,38 +36,44 @@ export const MainPage = (props) => {
                         <>
                             <button className="accountBtn" onClick={()=>{setIsAccountDetails(true); 
                                                                         setIsNewQuestion(false);
-                                                                        setIsQuestionDetails(false)}}>
+                                                                        setIsQuestionDetails(false);
+                                                                        setIsVeryfing(false)}}>
                                                                             Account Settings
                             </button>
-                            <button className="addNewQuestionBtn" onClick={()=>{setIsNewQuestion(true);setIsAccountDetails(false);setIsQuestionDetails(false)}}>Add</button>
+                            <button className="addNewQuestionBtn" onClick={()=>{setIsNewQuestion(true);setIsAccountDetails(false);setIsQuestionDetails(false); setIsVeryfing(false)}}>Add</button>
                         </>
                     : ""
                 }
 
-                <button className="mainPageBtn" onClick={()=>{setIsNewQuestion(false);setIsAccountDetails(false);setIsQuestionDetails(false)}}>Main</button>
+                { props.currentUserData.isAdmin == "true" ? 
+                    <button className="verifyUsersBtn" onClick={()=>{setIsNewQuestion(false);setIsAccountDetails(false);setIsQuestionDetails(false); setIsVeryfing(true)}}>Verify Users</button>
+                :""}
+
+                <button className="mainPageBtn" onClick={()=>{setIsNewQuestion(false);setIsAccountDetails(false);setIsQuestionDetails(false);setIsVeryfing(false)}}>Main</button>
             </div>
             
             {(!isAccountDetails && !isNewQuestion) || props.currentUserData.isLogged=="false"? 
                 <div className="searchBar">
-                    <input type="text" placeholder="Search for questions by its keys, authors or titles..."/>
-                    <button className="searchBtn">Search</button>
+                    <input value={valueOfInput} onChange={(e)=>{setValueOfInput(e.target.value)}} type="text" placeholder="Search for questions by its keys, authors or titles..."/>
+                    <button onClick={()=>{setKeyPhrase(valueOfInput); setValueOfInput("")}} className="searchBtn">Search</button>
                 </div>
             : ""}
 
 
             <div className="mainContainer">
-                {isQuestionDetails && !isAccountDetails && !isNewQuestion? 
+                {isQuestionDetails && !isAccountDetails && !isNewQuestion && !isVeryfing? 
                     <QuestionPage
                         questionInfo={currentQuestionDetails}
                         currentUserData={props.currentUserData}
                         answers={props.answers}
                         onRemoveAnswer={props.onRemoveAnswer}
                         onEditAnswer={props.onEditAnswer}
+                        onCreateAnswer={props.onCreateAnswer}
                     />
                 :""}
                 
                 
-                {isAccountDetails && !isNewQuestion && !isQuestionDetails? 
+                {isAccountDetails && !isNewQuestion && !isQuestionDetails && !isVeryfing? 
                     <AccountDetails 
                         currentUserData={props.currentUserData}
                         questions={props.questions}
@@ -74,10 +84,47 @@ export const MainPage = (props) => {
                     />
                     :""}
 
-                {!isQuestionDetails && !isAccountDetails && !isNewQuestion ? 
+                {!isQuestionDetails && !isAccountDetails && !isNewQuestion && !isVeryfing? 
                     <>
-                        MAIN PAGE
+                        <div className="questions">
+                            Questions: 
+                            {props.questions.map((question)=>{
+                                if (keyPhrase == ""){
+                                    return <QuestionOnMain 
+                                        questionInfo={question}
+                                        onQuestionDetails={questionDetails}
+                                        />
+                                }else if (keyPhrase == question.ownerName || keyPhrase == question.ownerKey || keyPhrase == question.title || keyPhrase == question.questionKey || keyPhrase == question.content){
+                                    return <QuestionOnMain 
+                                        questionInfo={question}
+                                        onQuestionDetails={questionDetails}
+                                        />
+                                }
+                            })}
+                        </div>
+
+                        <div className="archievedQuestions">
+                            Archieved Questions:
+                            {props.archievedQuestions.map((question)=>{
+                                if (keyPhrase == ""){
+                                    return <QuestionOnMain 
+                                        questionInfo={question}
+                                        onQuestionDetails={questionDetails}
+                                        />
+                                }else if (keyPhrase == question.ownerName || keyPhrase == question.ownerKey || keyPhrase == question.title || keyPhrase == question.questionKey || keyPhrase == question.content){
+                                    return <QuestionOnMain 
+                                        questionInfo={question}
+                                        onQuestionDetails={questionDetails}
+                                        />
+                                }
+                            })}
+                        </div>
                     </>
+                : ""}
+
+
+                {isVeryfing && !isNewQuestion && !isQuestionDetails && !isAccountDetails ?
+                    <></>
                 : ""}
 
             </div>

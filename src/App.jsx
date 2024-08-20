@@ -40,6 +40,8 @@ const initialAnswers = [
   }
 ]
 
+const initialArchieved = []
+
 
 function App() {
   const [isLoginPage, setIsLoginPage] = useState(false)
@@ -51,6 +53,7 @@ function App() {
   let [toVerifyUsers, setToVerifyUsers] = useState(initialToVerify)
   let [questions, setQuestions] = useState(initialQuestions)
   let [answers, setAnswers] = useState(initialAnswers)
+  let [archieved, setArchieved] = useState(initialArchieved)
 
 
   const changeToLoginPage = () => {setIsLoginPage(true); setIsMainPage(false);}
@@ -139,6 +142,13 @@ function App() {
 
   const removeQuestion = (questionInfo) => {
     let newQuestions = []
+    let newArchievedQuestion = questionInfo
+
+    newArchievedQuestion.isArchieved = "true"
+
+    archieved = [...archieved, newArchievedQuestion]
+    setArchieved(archieved)
+  
 
     questions.map((question)=>{
       if (question.questionKey != questionInfo.questionKey) {
@@ -179,6 +189,22 @@ function App() {
     setAnswers(answers)
   }
 
+  const createAnswer = (questionKey, newAnswer, userKey, userName) => {
+    let answer = {
+      answerKey: crypto.randomUUID(),
+      ownerKey: userKey,
+      questionKey: questionKey,
+      ownerName: userName,
+      content: newAnswer,
+      isEditted: "false",
+    }
+
+    answers = [...answers, answer]
+    setAnswers(answers)
+  }
+
+
+
   return (
     <>
 
@@ -196,6 +222,7 @@ function App() {
                                                         currentUserData={currentUserData}
                                                         users={users}
                                                         questions={questions}
+                                                        archievedQuestions={archieved}
                                                         answers={answers}
                                                         toVerifyUsers={toVerifyUsers}
                                                         onLogin={changeToLoginPage}
@@ -205,6 +232,7 @@ function App() {
                                                         onRemoveQuestion={removeQuestion}
                                                         onRemoveAnswer={removeAnswer}
                                                         onEditAnswer={editAnswer}
+                                                        onCreateAnswer={createAnswer}
                                                         />
       : ""}
 

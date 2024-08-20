@@ -1,7 +1,17 @@
 import "./QuestionPage.css"
 import { Answer } from "../Answer/Answer"
+import { useState } from "react"
 
 export const QuestionPage = (props) => {
+    const [newAnswer, setNewAnswer] = useState("")
+
+    const createNewAnswer = () => {
+        if (newAnswer != "") {
+            props.onCreateAnswer(props.questionInfo.questionKey, newAnswer, props.currentUserData.userKey, props.currentUserData.name)
+            setNewAnswer("")
+        }    
+    }
+
 
     return (
         <>
@@ -17,8 +27,12 @@ export const QuestionPage = (props) => {
 
 
                 <div className="answersSection">
-                    <p><input type="text" placeholder="Your answer"/></p>
-                    {props.currentUserData.userKey == props.questionInfo.ownerKey || props.currentUserData.isAdmin == "true" ? <button className="yes">Submit Answer</button> : <button disabled>Submit Answer</button>}
+                    <p><input type="text" value={newAnswer} onChange={(e)=>{setNewAnswer(e.target.value)}} placeholder="Your answer"/></p>
+
+                    {(props.currentUserData.userKey == props.questionInfo.ownerKey || props.currentUserData.isAdmin == "true") && props.questionInfo.isArchieved != "true" ? 
+                        <button className="yes" onClick={()=>{createNewAnswer()}}>Submit Answer</button> 
+                    : <button disabled>Submit Answer</button>}
+
                     <br />
                     {props.answers.map((answer)=>{
                         if (answer.questionKey == props.questionInfo.questionKey) {
