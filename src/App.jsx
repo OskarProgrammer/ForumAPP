@@ -204,6 +204,37 @@ function App() {
   }
 
 
+  const verify = (decision, accountKey) => {
+    if (decision) {
+      let newToVerifyUsers = []
+
+      toVerifyUsers.map((user)=>{
+        if (user.userKey == accountKey) {
+          users = [...users, user]
+        }else{
+          newToVerifyUsers.push(user)
+        }
+
+      })
+
+      toVerifyUsers = newToVerifyUsers
+
+      setUsers(users)
+      setToVerifyUsers(toVerifyUsers)
+    } else{
+      let newToVerifyUsers = []
+      
+      toVerifyUsers.map((user)=>{
+        if (user.userKey != accountKey) {
+          newToVerifyUsers.push(user)
+        }
+      })
+
+      toVerifyUsers = newToVerifyUsers
+      setToVerifyUsers(toVerifyUsers)
+    }
+  }
+
 
   return (
     <>
@@ -233,6 +264,7 @@ function App() {
                                                         onRemoveAnswer={removeAnswer}
                                                         onEditAnswer={editAnswer}
                                                         onCreateAnswer={createAnswer}
+                                                        onVerifying={verify}
                                                         />
       : ""}
 

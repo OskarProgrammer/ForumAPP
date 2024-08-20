@@ -3,6 +3,7 @@ import "./MainPage.css"
 import { AccountDetails } from "../AccountDetails/AccountDetails"
 import { QuestionPage } from "../QuestionPage/QuestionPage"
 import { QuestionOnMain } from "../QuestionOnMain/QuestionOnMain"
+import { PersonToVerify } from "../PersonToVerify/PersonToVerify"
 
 export const MainPage = (props) => {
     const [isAccountDetails, setIsAccountDetails] = useState(false)
@@ -52,10 +53,10 @@ export const MainPage = (props) => {
                 <button className="mainPageBtn" onClick={()=>{setIsNewQuestion(false);setIsAccountDetails(false);setIsQuestionDetails(false);setIsVeryfing(false)}}>Main</button>
             </div>
             
-            {(!isAccountDetails && !isNewQuestion) || props.currentUserData.isLogged=="false"? 
+            {(!isAccountDetails && !isNewQuestion && !isVeryfing) || props.currentUserData.isLogged=="false"? 
                 <div className="searchBar">
                     <input value={valueOfInput} onChange={(e)=>{setValueOfInput(e.target.value)}} type="text" placeholder="Search for questions by its keys, authors or titles..."/>
-                    <button onClick={()=>{setKeyPhrase(valueOfInput); setValueOfInput("")}} className="searchBtn">Search</button>
+                    <button onClick={()=>{setKeyPhrase(valueOfInput); setValueOfInput(""); setIsQuestionDetails(false)}} className="searchBtn">Search</button>
                 </div>
             : ""}
 
@@ -124,7 +125,16 @@ export const MainPage = (props) => {
 
 
                 {isVeryfing && !isNewQuestion && !isQuestionDetails && !isAccountDetails ?
-                    <></>
+                    <>
+                    
+                        {props.toVerifyUsers.map((user)=>{
+                            return <PersonToVerify 
+                                    personInfo={user} 
+                                    onVerifying={props.onVerifying}
+                                    />
+                        })}
+                    
+                    </>
                 : ""}
 
             </div>

@@ -16,7 +16,7 @@ export const Answer = (props) => {
     return (
         <div className="answer">
             {props.answerInfo.isEditted == "true" ? "(Editted)":""} {props.answerInfo.ownerName} : {props.answerInfo.content}
-            <p> {props.answerInfo.ownerKey == props.currentUserData.userKey ? <button onClick={()=>{setNewAnswer(props.answerInfo.content);setIsEditting(!isEditting)}}>Edit</button> : ""} {props.currentUserData.isAdmin == "true" 
+            <p> {props.answerInfo.ownerKey == props.currentUserData.userKey || props.currentUserData.isAdmin == "true"? <button onClick={()=>{setNewAnswer(props.answerInfo.content);setIsEditting(!isEditting)}}>Edit</button> : ""} {props.currentUserData.isAdmin == "true" 
                 ? <button onClick={()=>{props.onRemoveAnswer(props.answerInfo)}}>Remove</button> : ""}</p>
             {isEditting ? 
             <div className="cos">
