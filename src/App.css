@@ -9,6 +9,8 @@ html {
 
 body {
   background: linear-gradient(207deg, rgb(130, 66, 173) 0%, rgb(57, 99, 204) 53%) no-repeat;
+  background-attachment: fixed;
+  margin: 0;
 }
 
 button:hover {
