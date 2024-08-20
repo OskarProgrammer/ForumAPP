@@ -14,6 +14,7 @@ export const MainPage = (props) => {
         currentQuestionDetails = questionInfo
         setCurrentQuestionDetails(currentQuestionDetails)
 
+        setIsNewQuestion(false)
         setIsAccountDetails(false)
         setIsQuestionDetails(true)
     }
@@ -38,6 +39,8 @@ export const MainPage = (props) => {
                         </>
                     : ""
                 }
+
+                <button className="mainPageBtn" onClick={()=>{setIsNewQuestion(false);setIsAccountDetails(false);setIsQuestionDetails(false)}}>Main</button>
             </div>
             
             {(!isAccountDetails && !isNewQuestion) || props.currentUserData.isLogged=="false"? 
