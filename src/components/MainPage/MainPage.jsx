@@ -48,6 +48,7 @@ export const MainPage = (props) => {
                 {isQuestionDetails && !isAccountDetails && !isNewQuestion? 
                     <QuestionPage
                         questionInfo={currentQuestionDetails}
+                        currentUserData={props.currentUserData}
                     />
                 :""}
                 
