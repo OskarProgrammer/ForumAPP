@@ -24,7 +24,19 @@ const initialQuestions = [
     ownerKey: 1,
     title: "Pierwsze pytanie",
     content: "Text",
-    questionKey: crypto.randomUUID()
+    questionKey: 2,
+    isEditted: "false",
+  }
+]
+
+const initialAnswers = [
+  {
+    answerKey: crypto.randomUUID(),
+    ownerKey: 1,
+    questionKey: 2,
+    ownerName: "Oskar",
+    content: "Jakas odpowidsadsadadsadasdsadasdsadadsadsadasdasdasdasdasdasdasdasdasdasdasdasd asdasdasdasdasdsadasdasdasdasedz",
+    isEditted: "false",
   }
 ]
 
@@ -38,6 +50,7 @@ function App() {
   let [currentUserData, setCurrentUserData] = useState({isLogged: "false"})
   let [toVerifyUsers, setToVerifyUsers] = useState(initialToVerify)
   let [questions, setQuestions] = useState(initialQuestions)
+  let [answers, setAnswers] = useState(initialAnswers)
 
 
   const changeToLoginPage = () => {setIsLoginPage(true); setIsMainPage(false);}
@@ -137,6 +150,35 @@ function App() {
     setQuestions(questions)
   }
 
+  const removeAnswer = (answerInfo) => {
+    let newAnswers = []
+
+    answers.map((answer)=>{
+      if (answer.answerKey != answerInfo.answerKey) {
+        newAnswers.push(answer)
+      }
+    })
+
+    answers = newAnswers
+    setAnswers(answers)
+  }
+
+
+  const editAnswer = (answerInfo, newAnswer) => {
+    let newAnswers = []
+
+    answers.map((answer)=>{
+      if (answer.answerKey == answerInfo.answerKey) {
+        answer.content = newAnswer
+        answer.isEditted = "true"
+      }
+      newAnswers.push(answer)
+    })
+
+    answers=newAnswers
+    setAnswers(answers)
+  }
+
   return (
     <>
 
@@ -154,12 +196,15 @@ function App() {
                                                         currentUserData={currentUserData}
                                                         users={users}
                                                         questions={questions}
+                                                        answers={answers}
                                                         toVerifyUsers={toVerifyUsers}
                                                         onLogin={changeToLoginPage}
                                                         onLogOut={logOut}
                                                         onChangeName={changeName}
                                                         onChangePass={changePass}
                                                         onRemoveQuestion={removeQuestion}
+                                                        onRemoveAnswer={removeAnswer}
+                                                        onEditAnswer={editAnswer}
                                                         />
       : ""}
 

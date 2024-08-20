@@ -29,8 +29,12 @@ export const MainPage = (props) => {
                 {
                     props.currentUserData.isLogged == "true" ? 
                         <>
-                            <button className="accountBtn" onClick={()=>{setIsAccountDetails(true); setIsNewQuestion(false)}}>Account Settings</button>
-                            <button className="addNewQuestionBtn" onClick={()=>{setIsNewQuestion(true);setIsAccountDetails(false)}}>Add</button>
+                            <button className="accountBtn" onClick={()=>{setIsAccountDetails(true); 
+                                                                        setIsNewQuestion(false);
+                                                                        setIsQuestionDetails(false)}}>
+                                                                            Account Settings
+                            </button>
+                            <button className="addNewQuestionBtn" onClick={()=>{setIsNewQuestion(true);setIsAccountDetails(false);setIsQuestionDetails(false)}}>Add</button>
                         </>
                     : ""
                 }
@@ -39,7 +43,7 @@ export const MainPage = (props) => {
             {(!isAccountDetails && !isNewQuestion) || props.currentUserData.isLogged=="false"? 
                 <div className="searchBar">
                     <input type="text" placeholder="Search for questions by its keys, authors or titles..."/>
-                    <button className="searchBtn">L</button>
+                    <button className="searchBtn">Search</button>
                 </div>
             : ""}
 
@@ -49,6 +53,9 @@ export const MainPage = (props) => {
                     <QuestionPage
                         questionInfo={currentQuestionDetails}
                         currentUserData={props.currentUserData}
+                        answers={props.answers}
+                        onRemoveAnswer={props.onRemoveAnswer}
+                        onEditAnswer={props.onEditAnswer}
                     />
                 :""}
                 
@@ -63,6 +70,13 @@ export const MainPage = (props) => {
                         onQuestionDetails={questionDetails}
                     />
                     :""}
+
+                {!isQuestionDetails && !isAccountDetails && !isNewQuestion ? 
+                    <>
+                        MAIN PAGE
+                    </>
+                : ""}
+
             </div>
         </>
     )

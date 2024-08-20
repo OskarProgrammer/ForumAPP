@@ -24,6 +24,7 @@ export const AccountDetails = (props) => {
         <>
             <div className="accountDetails">
                 <div className="personalData">
+                    <p>{props.currentUserData.isAdmin == "true" ? "Admin Account" : "Normal Account"}</p>
                     Name: <input type="text" value={newName} 
                                             placeholder={props.currentUserData.name}
                                             onChange={(e)=>{setNewName(e.target.value)}}/>
