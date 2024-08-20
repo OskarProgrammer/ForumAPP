@@ -4,6 +4,7 @@ import { AccountDetails } from "../AccountDetails/AccountDetails"
 import { QuestionPage } from "../QuestionPage/QuestionPage"
 import { QuestionOnMain } from "../QuestionOnMain/QuestionOnMain"
 import { PersonToVerify } from "../PersonToVerify/PersonToVerify"
+import { QuestionCreator } from "../QuestionCreator/QuestionCreator"
 
 export const MainPage = (props) => {
     const [isAccountDetails, setIsAccountDetails] = useState(false)
@@ -137,6 +138,12 @@ export const MainPage = (props) => {
                     </>
                 : ""}
 
+                {isNewQuestion && !isVeryfing && !isQuestionDetails && !isAccountDetails ? 
+                    <QuestionCreator onCreateNewQuestion={props.onCreateNewQuestion}
+                                    currentUserData={props.currentUserData}
+                                    />
+                
+                : ""}
             </div>
         </>
     )

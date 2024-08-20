@@ -236,6 +236,20 @@ function App() {
   }
 
 
+  const createNewQuestion = (userInfo, title, content) => {
+    let newQuestion = {
+      ownerName: userInfo.name,
+      ownerKey: userInfo.userKey,
+      title: title,
+      content: content,
+      questionKey: crypto.randomUUID(),
+      isEditted: "false",
+    }
+
+    questions = [...questions, newQuestion]
+    setQuestions(questions)
+  }
+
   return (
     <>
 
@@ -265,6 +279,7 @@ function App() {
                                                         onEditAnswer={editAnswer}
                                                         onCreateAnswer={createAnswer}
                                                         onVerifying={verify}
+                                                        onCreateNewQuestion={createNewQuestion}
                                                         />
       : ""}
 

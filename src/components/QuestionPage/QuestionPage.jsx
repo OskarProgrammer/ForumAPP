@@ -27,7 +27,8 @@ export const QuestionPage = (props) => {
 
 
                 <div className="answersSection">
-                    <p><input type="text" value={newAnswer} onChange={(e)=>{setNewAnswer(e.target.value)}} placeholder="Your answer"/></p>
+                    {(props.currentUserData.userKey == props.questionInfo.ownerKey || props.currentUserData.isAdmin == "true") && props.questionInfo.isArchieved != "true" ? 
+                    <p><input type="text" value={newAnswer} onChange={(e)=>{setNewAnswer(e.target.value)}} placeholder="Your answer"/></p> : <p><input type="text" value={newAnswer} onChange={(e)=>{setNewAnswer(e.target.value)}} placeholder="You cant add answer to this question" disabled/></p>}
 
                     {(props.currentUserData.userKey == props.questionInfo.ownerKey || props.currentUserData.isAdmin == "true") && props.questionInfo.isArchieved != "true" ? 
                         <button className="yes" onClick={()=>{createNewAnswer()}}>Submit Answer</button> 
